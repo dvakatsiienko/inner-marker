@@ -24,13 +24,11 @@ export function App() {
 
   return (
     <main className="min-h-screen grid place-content-center gap-8">
-      <h1 className="text-4xl">Vite Foundation</h1>
+      <h1 className="text-4xl font-bold">Vite Foundation</h1>
 
-      <form action={formAction}>
+      <form className="grid gap-4" action={formAction}>
         <h1 className="text-2xl">Form state: {state.count}</h1>
-
-        <input type="text" name="count" value={state.count} />
-
+        <input className="border border-gray-700 py-1 px-2 rounded" type="text" name="count" value={state.count} />
         <button
           disabled={isPending}
           className="text-9xl text-amber-400 disabled:opacity-50"
@@ -50,7 +48,7 @@ const Button = memo(() => {
   const [count, setCount] = useState(0);
 
   return (
-    <section>
+    <section className="grid gap-2">
       <Text />
 
       <button
