@@ -5,25 +5,31 @@ import waait from "waait";
 /* Instruments */
 import "./App.scss";
 
-async function increment(previousState: number, formData: FormData) {
-  console.log("🚀 ~ increment ~ formData:", formData);
+async function increment(previousState: { count: number }, formData: FormData) {
+  console.log("🚀 ~ increment ~ formData:", formData.getAll("count"));
 
-  await waait(2000);
+  await waait(1000);
 
-  return previousState + 1;
+  return {
+    count: previousState.count + 1,
+  };
 }
 
 export function App() {
   const [count, setCount] = useState(0);
 
-  const [state, formAction, isPending] = useActionState(increment, 1);
+  const [state, formAction, isPending] = useActionState(increment, {
+    count: 1,
+  });
 
   return (
     <main className="min-h-screen grid place-content-center gap-8">
       <h1 className="text-4xl">Vite Foundation</h1>
 
       <form action={formAction}>
-        <h1 className="text-2xl">Form state: {state}</h1>
+        <h1 className="text-2xl">Form state: {state.count}</h1>
+
+        <input type="text" name="count" value={state.count} />
 
         <button
           disabled={isPending}
@@ -36,10 +42,6 @@ export function App() {
 
       <Button />
       <Button />
-
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </main>
   );
 }
