@@ -1,5 +1,12 @@
 /* Core */
-import { useState, memo, useActionState } from "react";
+import {
+  useState,
+  memo,
+  useActionState,
+  Suspense,
+  useEffect,
+  use,
+} from "react";
 import waait from "waait";
 
 /* Instruments */
@@ -16,19 +23,28 @@ async function increment(previousState: { count: number }, formData: FormData) {
 }
 
 export function App() {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(1);
 
   const [state, formAction, isPending] = useActionState(increment, {
-    count: 1,
+    count: 2,
   });
 
   return (
     <main className="min-h-screen grid place-content-center gap-8">
       <h1 className="text-4xl font-bold">Vite Foundation</h1>
 
+      <Suspense fallback={<h1>Loading...</h1>}>
+        <Data count={count} />
+      </Suspense>
+
       <form className="grid gap-4" action={formAction}>
         <h1 className="text-2xl">Form state: {state.count}</h1>
-        <input className="border border-gray-700 py-1 px-2 rounded" type="text" name="count" value={state.count} />
+        <input
+          className="border border-gray-700 py-1 px-2 rounded"
+          type="text"
+          name="count"
+          value={state.count}
+        />
         <button
           disabled={isPending}
           className="text-9xl text-amber-400 disabled:opacity-50"
@@ -42,6 +58,36 @@ export function App() {
       <Button />
     </main>
   );
+}
+
+// const getChars = () => fetch("https://api.sampleapis.com/futurama/characters");
+
+const useData = (count: number) => {
+  const [data, setData] = useState<string | null>(null);
+
+  useEffect(() => {
+    fetch(`https://jsonplaceholder.typicode.com/todos/${count}`)
+      .then(async (res) => {
+        await waait(2000);
+
+        return res.json();
+      })
+      .then((data) => setData(data));
+  }, [count]);
+
+  return data;
+};
+
+export const Data = (props: DataProps) => {
+  const data = useData(props.count);
+
+  console.log(data);
+  return "test";
+};
+
+/* Types */
+interface DataProps {
+  count: number;
 }
 
 const Button = memo(() => {
