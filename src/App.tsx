@@ -1,111 +1,146 @@
 /* Core */
-import {
-  useState,
-  memo,
-  useActionState,
-  Suspense,
-  useEffect,
-} from "react";
+import { useState, memo, useEffect } from "react";
 import waait from "waait";
+import { NavLink, Link, Outlet, Routes, Route, useParams } from "react-router";
 
 /* Instruments */
 import "./App.scss";
 
-async function increment(previousState: { count: number }, formData: FormData) {
-  console.log("🚀 ~ increment ~ formData:", formData.getAll("count"));
-
-  await waait(1000);
-
-  return {
-    count: previousState.count + 1,
-  };
+export default function Dashboard() {
+  return (
+    <div>
+      <h1>Dashboard</h1>
+      {/* will either be <Home/> or <Settings/> */}
+      <Outlet />
+    </div>
+  );
 }
 
-export function App() {
-  const [count, setCount] = useState(1);
-
-  const [state, formAction, isPending] = useActionState(increment, {
-    count: 2,
-  });
+export function ProjectsLayout() {
+  const { pid } = useParams();
 
   return (
-    <main className="min-h-screen grid place-content-center gap-8">
+    <div className="grid gap-4">
+      <h1 className="text-2xl font-bold">Projects Layout {pid}</h1>
+      <Outlet />
+    </div>
+  );
+}
+
+export function ProjectsWithoutLayout() {
+  return (
+    <div className="grid gap-4">
+      <h1 className="text-2xl font-bold">Projects Without Layout</h1>
+
+      <Outlet />
+    </div>
+  );
+}
+
+export function ProjectsHome() {
+  return (
+    <div className="grid gap-4">
+      <h1 className="text-2xl font-bold">Projects Home</h1>
+    </div>
+  );
+}
+
+export function Project() {
+  const { pid } = useParams();
+
+  return (
+    <div>
+      <h1>Project {pid}</h1>
+    </div>
+  );
+}
+
+export function EditProject() {
+  const { pid } = useParams();
+
+  return (
+    <div>
+      <h1>Edit Project {pid}</h1>
+    </div>
+  );
+}
+
+const Nav = () => {
+  return (
+    <nav className="flex gap-8 justify-center">
+      <NavLink to="/">Home</NavLink>
+      <div className="flex flex-col gap-2">
+        <NavLink to="/dashboard">Dashboard</NavLink>
+        <NavLink to="/dashboard/settings">Settings</NavLink>
+      </div>
+      <div className="flex flex-col gap-2">
+        <NavLink to="/projects">Projects</NavLink>
+        <NavLink to="/projects/1">Project 1</NavLink>
+        <NavLink to="/projects/2">Project 2</NavLink>
+        <NavLink to="/projects/1/edit">Edit Project 1</NavLink>
+        <NavLink to="/projects/2/edit">Edit Project 2</NavLink>
+      </div>
+      <div className="flex flex-col gap-2">
+        <NavLink to="/projects-without-layout">Projects without layout</NavLink>
+        <NavLink to="/projects-without-layout/1">Project 1</NavLink>
+        <NavLink to="/projects-without-layout/2">Project 2</NavLink>
+        <NavLink to="/projects-without-layout/1/edit">Edit Project 1</NavLink>
+        <NavLink to="/projects-without-layout/2/edit">Edit Project 2</NavLink>
+      </div>
+
+      <NavLink to="/concerts">Concerts</NavLink>
+      <NavLink to="/about">About</NavLink>
+    </nav>
+  );
+};
+
+export function App() {
+  return (
+    <main className="min-h-screen grid gap-8 auto-rows-min">
       <h1 className="text-4xl font-bold">Vite Foundation</h1>
+      <Nav />
 
-      <Suspense fallback={<h1>Loading...</h1>}>
-        <Data count={count} />
-      </Suspense>
+      <Routes>
+        <Route index element={<h1>Home root</h1>} />
+        <Route path="about" element={<h1>About</h1>} />
 
-      <form className="grid gap-4" action={formAction}>
-        <h1 className="text-2xl">Form state: {state.count}</h1>
-        <input
-          className="border border-gray-700 py-1 px-2 rounded"
-          type="text"
-          name="count"
-          value={state.count}
-        />
-        <button
-          disabled={isPending}
-          className="text-9xl text-amber-400 disabled:opacity-50"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          count is {count}
-        </button>
-      </form>
+        <Route path="dashboard" element={<Dashboard />}>
+          <Route index element={<h1>Home dashboard</h1>} />
+          <Route path="settings" element={<h1>Settings</h1>} />
+        </Route>
 
-      <Button />
-      <Button />
+        <Route path="projects">
+          <Route index element={<ProjectsHome />} />
+          <Route element={<ProjectsLayout />}>
+            <Route path=":pid?" element={<Project />} />
+            <Route path=":pid/edit?" element={<EditProject />} />
+          </Route>
+        </Route>
+
+        <Route path="concerts">
+          <Route index element={<h1>Concerts Home</h1>} />
+          <Route path=":city" element={<h1>City</h1>} />
+          <Route path="trending" element={<h1>Trending</h1>} />
+        </Route>
+
+        <Route path="projects-without-layout">
+          <Route
+            index
+            element={
+              <h1 className="text-2xl font-bold">
+                Projects without layout home
+              </h1>
+            }
+          />
+          <Route element={<ProjectsWithoutLayout />}>
+            <Route path=":pid" element={<h1>Project without layout</h1>} />
+            <Route
+              path=":pid/edit"
+              element={<h1>Edit Project without layout</h1>}
+            />
+          </Route>
+        </Route>
+      </Routes>
     </main>
   );
 }
-
-// const getChars = () => fetch("https://api.sampleapis.com/futurama/characters");
-
-const useData = (count: number) => {
-  const [data, setData] = useState<string | null>(null);
-
-  useEffect(() => {
-    fetch(`https://jsonplaceholder.typicode.com/todos/${count}`)
-      .then(async (res) => {
-        await waait(2000);
-
-        return res.json();
-      })
-      .then((data) => setData(data));
-  }, [count]);
-
-  return data;
-};
-
-export const Data = (props: DataProps) => {
-  const data = useData(props.count);
-
-  console.log(data);
-  return "test";
-};
-
-/* Types */
-interface DataProps {
-  count: number;
-}
-
-const Button = memo(() => {
-  const [count, setCount] = useState(0);
-
-  return (
-    <section className="grid gap-2">
-      <Text />
-
-      <button
-        className="text-9xl text-amber-400"
-        onClick={() => setCount((count) => count + 1)}
-      >
-        count is {count}
-      </button>
-    </section>
-  );
-});
-
-const Text = memo(() => {
-  return <h6 className="text-2xl">Hello, World!</h6>;
-});
