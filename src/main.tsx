@@ -7,7 +7,6 @@ import { BrowserRouter } from "react-router";
 import { App } from "./App";
 
 /* Instruments */
-import "./theme/index.scss";
 import "./theme/tailwind.css";
 
 createRoot(document.getElementById("root")!).render(

@@ -3,9 +3,6 @@ import { useState, memo, useEffect } from "react";
 import waait from "waait";
 import { NavLink, Link, Outlet, Routes, Route, useParams } from "react-router";
 
-/* Instruments */
-import "./App.scss";
-
 export default function Dashboard() {
   return (
     <div>
@@ -66,13 +63,21 @@ export function EditProject() {
 }
 
 const Nav = () => {
+  const navLinkCn = "list-disc";
+
   return (
     <nav className="flex gap-8 justify-center">
       <NavLink to="/">Home</NavLink>
+
       <div className="flex flex-col gap-2">
-        <NavLink to="/dashboard">Dashboard</NavLink>
-        <NavLink to="/dashboard/settings">Settings</NavLink>
+        <NavLink to="/dashboard" className={navLinkCn}>
+          Dashboard
+        </NavLink>
+        <NavLink to="/dashboard/settings" className={navLinkCn}>
+          Settings
+        </NavLink>
       </div>
+
       <div className="flex flex-col gap-2">
         <NavLink to="/projects">Projects</NavLink>
         <NavLink to="/projects/1">Project 1</NavLink>
@@ -80,6 +85,7 @@ const Nav = () => {
         <NavLink to="/projects/1/edit">Edit Project 1</NavLink>
         <NavLink to="/projects/2/edit">Edit Project 2</NavLink>
       </div>
+
       <div className="flex flex-col gap-2">
         <NavLink to="/projects-without-layout">Projects without layout</NavLink>
         <NavLink to="/projects-without-layout/1">Project 1</NavLink>
