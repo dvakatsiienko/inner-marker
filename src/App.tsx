@@ -1,49 +1,44 @@
 /* Core */
-import { useState, memo, useEffect } from 'react';
-import waait from 'waait';
-import { NavLink, Link, Outlet, Routes, Route, useParams } from 'react-router';
+import { NavLink as RRNavLink, Outlet, Routes, Route, useParams, useHref, useMatch, useLocation } from 'react-router';
 
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
+import { Separator } from '@/components/ui/separator';
 
-export default function Dashboard() {
+const NavLink = ({ to, children }: { to: string; children: React.ReactNode }) => {
+    return (
+        <RRNavLink to={to} className={({ isActive }) => (isActive ? 'text-amber-600' : '')} end>
+            {children}
+        </RRNavLink>
+    );
+};
+
+function Dashboard() {
     return (
         <div className='[grid-area:content]'>
             <h1 className='heading'>Dashboard</h1>
-            {/* will either be <Home/> or <Settings/> */}
             <Outlet />
         </div>
     );
 }
 
-export function ProjectsLayout() {
-    return (
-        <div className='[grid-area:content]'>
-            <h1 className='heading'>Projects Layout</h1>
-            <Outlet />
-        </div>
-    );
-}
-
-export function ProjectsWithoutLayout() {
-    return (
-        <div className='[grid-area:content]'>
-            <h1 className='heading'>Projects Without Layout</h1>
-
-            <Outlet />
-        </div>
-    );
-}
-
-export function ProjectsIndex() {
+function ProjectsIndex() {
     return (
         <div className='[grid-area:content]'>
             <h1 className='heading'>Projects Index</h1>
         </div>
     );
 }
-
-export function Project() {
+function ProjectLayout() {
+    return (
+        <div className='[grid-area:content]'>
+            <h1 className='heading'>Project Layout</h1>
+            <Outlet />
+        </div>
+    );
+}
+function Project() {
     const { pid } = useParams();
 
     return (
@@ -52,8 +47,7 @@ export function Project() {
         </div>
     );
 }
-
-export function EditProject() {
+function EditProject() {
     const { pid } = useParams();
 
     return (
@@ -65,10 +59,15 @@ export function EditProject() {
 
 const Nav = () => {
     const navLinkCn = 'list-disc';
+    const separatorCn = 'bg-border shrink-0 mb-4';
 
     return (
-        <Card className='flex flex-col gap-8 justify-center px-2 [grid-area:nav]'>
+        <Card className='flex flex-col gap-2 px-2 [grid-area:sidebar-l]'>
+            <h1 className='heading'>Nav</h1>
+            <Separator className={separatorCn} />
+
             <NavLink to='/'>Home</NavLink>
+            <Separator className={separatorCn} />
 
             <div className='flex flex-col gap-2'>
                 <NavLink to='/dashboard' className={navLinkCn}>
@@ -78,6 +77,7 @@ const Nav = () => {
                     Settings
                 </NavLink>
             </div>
+            <Separator className={separatorCn} />
 
             <div className='flex flex-col gap-2'>
                 <NavLink to='/projects'>Projects</NavLink>
@@ -86,22 +86,15 @@ const Nav = () => {
                 <NavLink to='/projects/1/edit'>Edit Project 1</NavLink>
                 <NavLink to='/projects/2/edit'>Edit Project 2</NavLink>
             </div>
+            <Separator className={separatorCn} />
 
-            <div className='flex flex-col gap-2'>
-                <NavLink to='/projects-without-layout'>Projects Without Layout</NavLink>
-                <NavLink to='/projects-without-layout/1'>Project 1</NavLink>
-                <NavLink to='/projects-without-layout/2'>Project 2</NavLink>
-                <NavLink to='/projects-without-layout/1/edit'>Edit Project 1</NavLink>
-                <NavLink to='/projects-without-layout/2/edit'>Edit Project 2</NavLink>
-            </div>
+            <NavLink to='/events'>Events</NavLink>
+            <Separator className={separatorCn} />
 
-            <NavLink to='/concerts'>Concerts</NavLink>
-            <NavLink to='/about'>About</NavLink>
+            <NavLink to='/test'>Test</NavLink>
         </Card>
     );
 };
-
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 
 const Cards = () => {
     const cardCn = 'grid place-items-center font-semibold h-full';
@@ -130,8 +123,25 @@ const Cards = () => {
 
 const Events = () => {
     return (
-        <Card className='[grid-area:events] px-2'>
+        <Card className='[grid-area:sidebar-r] px-2'>
             <h1 className='heading'>Events</h1>
+            <NavLink to='/events/trending'>Trending</NavLink>
+            <NavLink to='/events/new-york'>New York</NavLink>
+            <NavLink to='/events/los-angeles'>Los Angeles</NavLink>
+            <NavLink to='/events/chicago'>Chicago</NavLink>
+            <NavLink to='/events/houston'>Houston</NavLink>
+            <NavLink to='/events/phoenix'>Phoenix</NavLink>
+            <NavLink to='/events/philadelphia'>Philadelphia</NavLink>
+        </Card>
+    );
+};
+
+const EventsOptional = () => {
+    const { city } = useParams();
+
+    return (
+        <Card className='[grid-area:sidebar-r] px-2'>
+            <h1 className='heading'>Events Optional {city}</h1>
         </Card>
     );
 };
@@ -158,42 +168,64 @@ export function App() {
 
             <Routes>
                 <Route index element={<h1 className='heading [grid-area:content]'>Root Index</h1>} />
-                <Route path='about' element={<h1 className='heading [grid-area:content]'>About</h1>} />
 
                 <Route path='dashboard' element={<Dashboard />}>
                     <Route index element={<h1 className='[grid-area:content]'>Dashboard Index</h1>} />
                     <Route path='settings' element={<h1 className='[grid-area:content]'>Settings</h1>} />
                 </Route>
 
-                <Route path='projects'>
+                <Route
+                    path='projects'
+                    element={
+                        <div className='heading [grid-area:content]'>
+                            <h1>Projects Route Definition</h1>
+                            <Outlet />
+                        </div>
+                    }>
                     <Route index element={<ProjectsIndex />} />
-                    <Route element={<ProjectsLayout />}>
-                        <Route path=':pid?' element={<Project />} />
-                        <Route path=':pid/edit?' element={<EditProject />} />
+                    <Route element={<ProjectLayout />}>
+                        <Route path=':pid' element={<Project />} />
+                        <Route path=':pid/edit' element={<EditProject />} />
                     </Route>
                 </Route>
 
-                <Route path='concerts'>
-                    <Route index element={<h1 className='heading [grid-area:content]'>Concerts Home</h1>} />
-                    <Route path=':city' element={<h1 className='heading [grid-area:content]'>City</h1>} />
+                <Route path='events'>
+                    <Route index element={<h1 className='heading [grid-area:content]'>Events Index</h1>} />
+                    <Route path=':city' element={<EventsOptional />} />
                     <Route path='trending' element={<h1 className='heading [grid-area:content]'>Trending</h1>} />
                 </Route>
 
-                <Route path='projects-without-layout'>
-                    <Route
-                        index
-                        element={<h1 className='heading [grid-area:content]'>Projects Without Layout Index</h1>}
-                    />
-
-                    <Route element={<ProjectsWithoutLayout />}>
-                        <Route path=':pid' element={<h1 className='[grid-area:content]'>Project Without Layout</h1>} />
-                        <Route
-                            path=':pid/edit'
-                            element={<h1 className='[grid-area:content]'>Edit Project Without Layout</h1>}
-                        />
-                    </Route>
+                <Route
+                    path='test'
+                    element={
+                        <section className='heading [grid-area:content]'>
+                            <h1>Test layout</h1>
+                            <Outlet />
+                        </section>
+                    }>
+                    <Route index element={<h1 className='heading [grid-area:content]'>Test Index</h1>} />
+                    <Route path='files/:testId' element={<TestOptParam />} />
                 </Route>
             </Routes>
         </main>
     );
 }
+
+const TestOptParam = () => {
+    const { testId } = useParams<'testId'>();
+    const href = useHref('xxx/test');
+    const location = useLocation();
+    const match = useMatch({ path: '/test/files/:testId' });
+
+    console.log('match', match);
+    console.log('location', location);
+    // console.log(href);
+
+    return (
+        <div className='[grid-area:content]'>
+            <h1>Test {testId}</h1>
+            {href}
+            <Outlet />
+        </div>
+    );
+};

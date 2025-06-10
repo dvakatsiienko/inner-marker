@@ -22,8 +22,8 @@
         display: grid;
         grid-template-areas:
             'links cards x'
-            'events content nav'
-            'events content nav';
+            'sidebar-l content sidebar-r'
+            'sidebar-l content sidebar-r';
         grid-template-columns: 300px 1fr 300px;
         grid-template-rows: 100px 1fr 100px;
     }
