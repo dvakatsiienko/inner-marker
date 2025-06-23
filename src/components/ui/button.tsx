@@ -8,7 +8,13 @@ import { cn } from '@/helpers/cn';
 export const Button = ({ className, variant, size, asChild = false, ...props }: ButtonProps) => {
     const Comp = asChild ? Slot : 'button';
 
-    return <Comp data-slot='button' className={cn(buttonVariants({ variant, size, className }))} {...props} />;
+    return (
+        <Comp
+            data-slot='button'
+            className={cn(buttonVariants({ variant, size, className }))}
+            {...props}
+        />
+    );
 };
 
 /* Styles */

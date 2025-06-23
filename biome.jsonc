@@ -1,24 +1,65 @@
 {
-    "$schema": "https://biomejs.dev/schemas/2.0.4/schema.json",
-    "vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true },
-    "files": { "ignoreUnknown": false },
+    "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+    "files": { "ignoreUnknown": false, "includes": ["./**/*"] },
+    "vcs": {
+        "enabled": true,
+        "clientKind": "git",
+        "useIgnoreFile": true,
+        "defaultBranch": "main"
+    },
     "formatter": {
         "enabled": true,
         "formatWithErrors": false,
         "indentStyle": "space",
         "indentWidth": 4,
         "lineEnding": "lf",
-        "lineWidth": 120,
+        "lineWidth": 100,
         "attributePosition": "auto",
         "bracketSameLine": false,
         "bracketSpacing": true,
         "expand": "auto",
         "useEditorconfig": true
     },
-    "linter": { "enabled": true, "rules": { "recommended": true } },
     "assist": {
         "enabled": true,
         "actions": { "source": { "organizeImports": "on" } }
+    },
+    "linter": {
+        "enabled": true,
+        "domains": {
+            "project": "all",
+            "react": "all"
+        },
+        "rules": {
+            "recommended": true,
+            "a11y": "off",
+
+            // rules focused on preventing accessibility problems.
+            // accessibility
+
+            // rules that focus on inspecting complex code that could be simplified.
+            // complexity
+
+            // rules that detect code that is guaranteed to be incorrect or useless.
+            // correctness
+
+            // rules catching ways your code could be written to run faster, or generally be more efficient.
+            // performance
+
+            // rules that detect ways your code could be exploited or lead to security vulnerabilities.
+            // security
+
+            // rules enforcing a consistent and idiomatic way of writing your code. By default, these rules will only generate warnings instead of errors.
+            // style
+
+            // rules that detect code that is likely to be incorrect or useless.
+            // Suspicious
+
+            "nursery": {
+                // rules under development
+                "noUnresolvedImports": "off" // TODO delegate this to tsc when all code is migrated to ts
+            }
+        }
     },
 
     "javascript": {
@@ -34,11 +75,5 @@
             "bracketSpacing": true
         }
     },
-    "html": { "formatter": { "selfCloseVoidElements": "always" } },
-    "overrides": [
-        {
-            "includes": ["*.jsonc"],
-            "javascript": { "formatter": { "trailingCommas": "none" } }
-        }
-    ]
+    "html": { "formatter": { "selfCloseVoidElements": "always" } }
 }

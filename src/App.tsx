@@ -1,14 +1,46 @@
 /* Core */
-import { NavLink as RRNavLink, Outlet, Routes, Route, useParams, useHref, useMatch, useLocation } from 'react-router';
+
+import { cx } from 'class-variance-authority';
+import {
+    Outlet,
+    Route,
+    Routes,
+    NavLink as RRNavLink,
+    useHref,
+    useLocation,
+    useMatch,
+    useParams,
+} from 'react-router';
 
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
+import {
+    Carousel,
+    CarouselContent,
+    CarouselItem,
+    CarouselNext,
+    CarouselPrevious,
+} from '@/components/ui/carousel';
 import { Separator } from '@/components/ui/separator';
 
-const NavLink = ({ to, children }: { to: string; children: React.ReactNode }) => {
+import { TodoList1 } from './mobx-1.tsx';
+import { TodoList2 } from './mobx-2.tsx';
+
+const NavLink = ({
+    to,
+    children,
+    className,
+}: {
+    to: string;
+    children: React.ReactNode;
+    className?: string;
+}) => {
     return (
-        <RRNavLink to={to} className={({ isActive }) => (isActive ? 'text-amber-600' : '')} end>
+        <RRNavLink
+            to={to}
+            className={({ isActive }) => cx(isActive ? 'text-amber-600' : '', className)}
+            end
+        >
             {children}
         </RRNavLink>
     );
@@ -92,6 +124,8 @@ const Nav = () => {
             <Separator className={separatorCn} />
 
             <NavLink to='/test'>Test</NavLink>
+            <NavLink to='/mobx-1'>Mobx 1</NavLink>
+            <NavLink to='/mobx-2'>Mobx 2</NavLink>
         </Card>
     );
 };
@@ -167,11 +201,20 @@ export function App() {
             <Events />
 
             <Routes>
-                <Route index element={<h1 className='heading [grid-area:content]'>Root Index</h1>} />
+                <Route
+                    index
+                    element={<h1 className='heading [grid-area:content]'>Root Index</h1>}
+                />
 
                 <Route path='dashboard' element={<Dashboard />}>
-                    <Route index element={<h1 className='[grid-area:content]'>Dashboard Index</h1>} />
-                    <Route path='settings' element={<h1 className='[grid-area:content]'>Settings</h1>} />
+                    <Route
+                        index
+                        element={<h1 className='[grid-area:content]'>Dashboard Index</h1>}
+                    />
+                    <Route
+                        path='settings'
+                        element={<h1 className='[grid-area:content]'>Settings</h1>}
+                    />
                 </Route>
 
                 <Route
@@ -181,7 +224,8 @@ export function App() {
                             <h1>Projects Route Definition</h1>
                             <Outlet />
                         </div>
-                    }>
+                    }
+                >
                     <Route index element={<ProjectsIndex />} />
                     <Route element={<ProjectLayout />}>
                         <Route path=':pid' element={<Project />} />
@@ -190,9 +234,15 @@ export function App() {
                 </Route>
 
                 <Route path='events'>
-                    <Route index element={<h1 className='heading [grid-area:content]'>Events Index</h1>} />
+                    <Route
+                        index
+                        element={<h1 className='heading [grid-area:content]'>Events Index</h1>}
+                    />
                     <Route path=':city' element={<EventsOptional />} />
-                    <Route path='trending' element={<h1 className='heading [grid-area:content]'>Trending</h1>} />
+                    <Route
+                        path='trending'
+                        element={<h1 className='heading [grid-area:content]'>Trending</h1>}
+                    />
                 </Route>
 
                 <Route
@@ -202,10 +252,17 @@ export function App() {
                             <h1>Test layout</h1>
                             <Outlet />
                         </section>
-                    }>
-                    <Route index element={<h1 className='heading [grid-area:content]'>Test Index</h1>} />
+                    }
+                >
+                    <Route
+                        index
+                        element={<h1 className='heading [grid-area:content]'>Test Index</h1>}
+                    />
                     <Route path='files/:testId' element={<TestOptParam />} />
                 </Route>
+
+                <Route path='mobx-1' element={TodoList1} />
+                <Route path='mobx-2' element={TodoList2} />
             </Routes>
         </main>
     );

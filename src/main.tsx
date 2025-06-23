@@ -6,7 +6,7 @@ import { BrowserRouter } from 'react-router';
 import '@fontsource-variable/inter';
 
 /* Core */
-import { App } from './App';
+import { App } from './App.tsx';
 
 /* Instruments */
 import './theme/tailwind.css';
