@@ -1,5 +1,10 @@
 import { action, computed, type IComputedValue, observable } from 'mobx';
 
+// make(Auto)Observable modifies object, does not proxies it
+
+// observable clones object, creates a proxy
+// proxy may me disabled by using { proxy: false }
+
 export const getTodoStore = (id: number, title: string) => {
     const todoStore = observable({
         id,

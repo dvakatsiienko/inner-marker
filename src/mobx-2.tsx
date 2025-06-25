@@ -1,5 +1,7 @@
 import { makeAutoObservable } from 'mobx';
 
+// makeAutoObservable does not work with sub classes
+
 export class ClassTodo {
     id = Math.random();
     title = '';
