@@ -22,9 +22,10 @@ import {
     CarouselPrevious,
 } from '@/components/ui/carousel';
 import { Separator } from '@/components/ui/separator';
-
-import { TodoList1 } from './mobx-1.tsx';
-import { TodoList2 } from './mobx-2.tsx';
+import { todoListStore1 } from './mobx-1.tsx';
+import { todoListStore2 } from './mobx-2.tsx';
+import { todoListStore3 } from './mobx-3.tsx';
+import { TodoList } from './TodoList.tsx';
 
 const NavLink = ({
     to,
@@ -126,6 +127,7 @@ const Nav = () => {
             <NavLink to='/test'>Test</NavLink>
             <NavLink to='/mobx-1'>Mobx 1</NavLink>
             <NavLink to='/mobx-2'>Mobx 2</NavLink>
+            <NavLink to='/mobx-3'>Mobx 3</NavLink>
         </Card>
     );
 };
@@ -261,8 +263,9 @@ export function App() {
                     <Route path='files/:testId' element={<TestOptParam />} />
                 </Route>
 
-                <Route path='mobx-1' element={TodoList1} />
-                <Route path='mobx-2' element={TodoList2} />
+                <Route path='mobx-1' element={<TodoList todoList={todoListStore1.todoList} />} />
+                <Route path='mobx-2' element={<TodoList todoList={todoListStore2.todoList} />} />
+                <Route path='mobx-3' element={<TodoList todoList={todoListStore3.todoList} />} />
             </Routes>
         </main>
     );

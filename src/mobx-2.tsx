@@ -1,45 +1,34 @@
-import { action, computed, type IComputedValue, makeObservable, observable } from 'mobx';
-import { observer } from 'mobx-react-lite';
+import { makeAutoObservable } from 'mobx';
 
-const todoStore = observable({
-    id: 1,
-    title: 'Get Coffee',
-    finished: false,
-    toggle: action(() => {
-        todoStore.finished = !todoStore.finished;
-    }),
-});
+export class ClassTodo {
+    id = Math.random();
+    title = '';
+    finished = false;
 
-const todoListStore = observable<{
-    todos: (typeof todoStore)[];
-    unfinishedTodoCount: IComputedValue<number>;
-}>({
-    todos: [todoStore, todoStore],
-    unfinishedTodoCount: computed((): number => {
-        return todoListStore.todos.filter((todo) => !todo.finished).length;
-    }),
-});
+    constructor(title: string) {
+        makeAutoObservable(this);
+        this.title = title;
+    }
 
-const TodoListView = observer(({ todoList }: { todoList: typeof todoListStore }) => {
-    return (
-        <div className='[grid-area:content] flex flex-col gap-4'>
-            <ul className='flex flex-col gap-2'>
-                {todoList.todos.map((todo) => (
-                    <TodoView todo={todo} key={todo.id} />
-                ))}
-            </ul>
-            Tasks left: {todoList.unfinishedTodoCount.get()}
-        </div>
-    );
-});
+    toggle() {
+        this.finished = !this.finished;
+    }
+}
 
-const TodoView = observer(({ todo }: { todo: typeof todoStore }) => (
-    <li className='flex items-center gap-2'>
-        <label className='flex items-center gap-2 cursor-pointer select-none'>
-            <input type='checkbox' checked={todo.finished} onClick={() => todo.toggle()} />
-            {todo.title}
-        </label>
-    </li>
-));
+export class ClassTodoList {
+    todoList: ClassTodo[] = [];
 
-export const TodoList2 = <TodoListView todoList={todoListStore} />;
+    get unfinishedTodoCount() {
+        return this.todoList.filter((todo) => !todo.finished).length;
+    }
+
+    constructor(todos: ClassTodo[]) {
+        makeAutoObservable(this);
+        this.todoList = todos;
+    }
+}
+
+export const todoListStore2 = new ClassTodoList([
+    new ClassTodo('Get Coffee'),
+    new ClassTodo('Write simpler code'),
+]);
