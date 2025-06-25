@@ -1,79 +1,51 @@
 {
-    "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
-    "files": { "ignoreUnknown": false, "includes": ["./**/*"] },
-    "vcs": {
-        "enabled": true,
-        "clientKind": "git",
-        "useIgnoreFile": true,
-        "defaultBranch": "main"
-    },
-    "formatter": {
-        "enabled": true,
-        "formatWithErrors": false,
-        "indentStyle": "space",
-        "indentWidth": 4,
-        "lineEnding": "lf",
-        "lineWidth": 100,
-        "attributePosition": "auto",
-        "bracketSameLine": false,
-        "bracketSpacing": true,
-        "expand": "auto",
-        "useEditorconfig": true
-    },
-    "assist": {
-        "enabled": true,
-        "actions": { "source": { "organizeImports": "on" } }
-    },
-    "linter": {
-        "enabled": true,
-        "domains": {
-            "project": "all",
-            "react": "all"
-        },
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+
+  "extends": ["./biome.formatter.jsonc", "./biome.linter.jsonc"],
+  "files": {
+    "ignoreUnknown": false,
+    "includes": ["**", "!**/public/**/*"]
+  },
+
+  "vcs": {
+    "clientKind": "git",
+    "defaultBranch": "master",
+    "enabled": true,
+    "useIgnoreFile": true
+  },
+
+  "overrides": [
+    // do not sort special files — they are better to organize manually
+    {
+      "linter": {
         "rules": {
-            "recommended": true,
-            "a11y": "off",
-
-            // rules focused on preventing accessibility problems.
-            // accessibility
-
-            // rules that focus on inspecting complex code that could be simplified.
-            // complexity
-
-            // rules that detect code that is guaranteed to be incorrect or useless.
-            // correctness
-
-            // rules catching ways your code could be written to run faster, or generally be more efficient.
-            // performance
-
-            // rules that detect ways your code could be exploited or lead to security vulnerabilities.
-            // security
-
-            // rules enforcing a consistent and idiomatic way of writing your code. By default, these rules will only generate warnings instead of errors.
-            // style
-
-            // rules that detect code that is likely to be incorrect or useless.
-            // Suspicious
-
-            "nursery": {
-                // rules under development
-                "noUnresolvedImports": "off" // TODO delegate this to tsc when all code is migrated to ts
-            }
+          "correctness": {
+            "noInnerDeclarations": "off"
+          }
         }
+      },
+      "includes": ["plugin/**"] // todo resolve issues here
     },
-
-    "javascript": {
-        "formatter": {
-            "jsxQuoteStyle": "single",
-            "quoteProperties": "asNeeded",
-            "trailingCommas": "all",
-            "semicolons": "always",
-            "arrowParentheses": "always",
-            "bracketSameLine": false,
-            "quoteStyle": "single",
-            "attributePosition": "auto",
-            "bracketSpacing": true
+    {
+      "assist": {
+        "actions": {
+          "source": {
+            "useSortedKeys": "off"
+          }
         }
-    },
-    "html": { "formatter": { "selfCloseVoidElements": "always" } }
+      },
+      "includes": [
+        "!package.json",
+        "!tsconfig.json",
+        "!webpack.config.tsconfig.json",
+        "!.swcrc",
+        "!biome.jsonc",
+        "!biome.*.jsonc",
+        "!biome.formatter.jsonc",
+        "!biome.linter.jsonc",
+        "!.prettierrc.json",
+        "webpack/**"
+      ]
+    }
+  ]
 }
