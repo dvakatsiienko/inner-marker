@@ -19,7 +19,7 @@ import {
 	CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Separator } from "@/components/ui/separator";
-import { CommandDialogDemo } from "./CMD.tsx";
+import { CommandMenu } from "./components/ui/command.tsx";
 import { todoListStore1 } from "./mobx-1.tsx";
 import { todoListStore2 } from "./mobx-2.tsx";
 import { todoListStore3 } from "./mobx-3.tsx";
@@ -199,7 +199,7 @@ export function App() {
 			<Links />
 
 			<Nav />
-			<CommandDialogDemo />
+			<CommandMenu />
 			<Cards />
 			<Events />
 
