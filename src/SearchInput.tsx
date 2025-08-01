@@ -20,18 +20,6 @@ import {
 import { cn } from "@/helpers/cn";
 
 // Mock data for search results
-const mockData = [
-	{ id: 1, title: "Calendar Events", icon: Calendar, category: "Apps" },
-	{ id: 2, title: "User Profile", icon: User, category: "Settings" },
-	{ id: 3, title: "System Settings", icon: Settings, category: "Settings" },
-	{ id: 4, title: "Documents", icon: FileText, category: "Files" },
-	{ id: 5, title: "Projects Folder", icon: Folder, category: "Files" },
-	{ id: 6, title: "Email Client", icon: Mail, category: "Apps" },
-	{ id: 7, title: "Phone Contacts", icon: Phone, category: "Contacts" },
-	{ id: 8, title: "Favorites", icon: Star, category: "Bookmarks" },
-	{ id: 9, title: "Meeting Notes", icon: FileText, category: "Files" },
-	{ id: 10, title: "Team Calendar", icon: Calendar, category: "Apps" },
-];
 
 export function SearchInputDemo() {
 	const [searchQuery, setSearchQuery] = React.useState("");
@@ -65,7 +53,7 @@ export function SearchInputDemo() {
 
 	return (
 		<div className="[grid-area:cmk]">
-			<Popover open={isOpen} onOpenChange={setIsOpen}>
+			<Popover modal={true} open={isOpen} onOpenChange={setIsOpen}>
 				<PopoverTrigger asChild>
 					<div className="relative">
 						<Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
@@ -86,7 +74,15 @@ export function SearchInputDemo() {
 				</PopoverTrigger>
 
 				{filteredResults.length > 0 && (
-					<PopoverContent className="w-80 p-0" align="start">
+					<PopoverContent
+						onOpenAutoFocus={(e) => {
+							console.log("onOpenAutoFocus", e);
+							return e.preventDefault();
+						}}
+						autoFocus={false}
+						className=" p-0"
+						align="start"
+					>
 						<div className="max-h-[300px] overflow-y-auto">
 							{/* Group results by category */}
 							{Object.entries(
@@ -133,3 +129,16 @@ export function SearchInputDemo() {
 		</div>
 	);
 }
+
+const mockData = [
+	{ id: 1, title: "Calendar Events", icon: Calendar, category: "Apps" },
+	{ id: 2, title: "User Profile", icon: User, category: "Settings" },
+	{ id: 3, title: "System Settings", icon: Settings, category: "Settings" },
+	{ id: 4, title: "Documents", icon: FileText, category: "Files" },
+	{ id: 5, title: "Projects Folder", icon: Folder, category: "Files" },
+	{ id: 6, title: "Email Client", icon: Mail, category: "Apps" },
+	{ id: 7, title: "Phone Contacts", icon: Phone, category: "Contacts" },
+	{ id: 8, title: "Favorites", icon: Star, category: "Bookmarks" },
+	{ id: 9, title: "Meeting Notes", icon: FileText, category: "Files" },
+	{ id: 10, title: "Team Calendar", icon: Calendar, category: "Apps" },
+];
