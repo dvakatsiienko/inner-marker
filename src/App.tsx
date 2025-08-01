@@ -23,6 +23,7 @@ import { CommandMenu } from "./components/ui/command.tsx";
 import { todoListStore1 } from "./mobx-1.tsx";
 import { todoListStore2 } from "./mobx-2.tsx";
 import { todoListStore3 } from "./mobx-3.tsx";
+import { SearchInputDemo } from "./SearchInput.tsx";
 import { TodoList } from "./TodoList.tsx";
 
 const NavLink = ({
@@ -200,6 +201,7 @@ export function App() {
 
 			<Nav />
 			<CommandMenu />
+			<SearchInputDemo />
 			<Cards />
 			<Events />
 
