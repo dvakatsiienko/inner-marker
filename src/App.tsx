@@ -129,6 +129,7 @@ const Nav = () => {
 			<NavLink to="/mobx-1">Mobx 1</NavLink>
 			<NavLink to="/mobx-2">Mobx 2</NavLink>
 			<NavLink to="/mobx-3">Mobx 3</NavLink>
+			<NavLink to="/zustand">Zustand</NavLink>
 		</Card>
 	);
 };
@@ -282,6 +283,7 @@ export function App() {
 					path="mobx-3"
 					element={<TodoList todoList={todoListStore3.todoList} />}
 				/>
+				<Route path="zustand" element={<span>todo</span>} />
 			</Routes>
 		</main>
 	);
