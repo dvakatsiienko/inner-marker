@@ -4,7 +4,14 @@
   "extends": ["biome-config-polished"],
   "files": {
     "ignoreUnknown": false,
-    "includes": ["**", "!**/public/**/*"]
+    "includes": ["!**/public/**/*"]
+  },
+
+  "css": {
+    "parser": {
+      "cssModules": false,
+      "tailwindDirectives": true
+    }
   },
 
   "vcs": {
