@@ -1,15 +1,9 @@
-/* Core */
 import { StrictMode } from 'react';
-import { BrowserRouter } from 'react-router';
 import { createRoot } from 'react-dom/client';
-
+import { BrowserRouter } from 'react-router';
 import '@fontsource-variable/inter';
-
-/* Core */
-import { App } from './App.tsx';
-
-/* Instruments */
 import './theme/tailwind.css';
+import { App } from './App';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
