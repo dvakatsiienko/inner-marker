@@ -6,9 +6,7 @@ import { cn } from '@/helpers/cn';
 export const AppShell: React.FC = () => {
   return (
     <div className='flex min-h-screen flex-col'>
-      <nav
-        className='flex items-center justify-between border-b px-6 py-4'
-        style={{ viewTransitionName: 'app-nav' }}>
+      <nav className='flex items-center justify-between border-b px-6 py-4'>
         <span className='font-mono text-sm font-semibold tracking-tight text-foreground'>
           inner-marker
         </span>
@@ -16,54 +14,50 @@ export const AppShell: React.FC = () => {
           <NavLink
             className={({ isActive }) =>
               cn(
-                'text-sm transition-colors hover:text-foreground',
+                'text-sm hover:text-foreground',
                 isActive
                   ? 'font-semibold text-foreground'
                   : 'text-muted-foreground',
               )
             }
             end
-            to='/'
-            viewTransition>
+            to='/'>
             Home
           </NavLink>
           <NavLink
             className={({ isActive }) =>
               cn(
-                'text-sm transition-colors hover:text-foreground',
+                'text-sm hover:text-foreground',
                 isActive
                   ? 'font-semibold text-foreground'
                   : 'text-muted-foreground',
               )
             }
-            to='/work'
-            viewTransition>
+            to='/work'>
             Work
           </NavLink>
           <NavLink
             className={({ isActive }) =>
               cn(
-                'text-sm transition-colors hover:text-foreground',
+                'text-sm hover:text-foreground',
                 isActive
                   ? 'font-semibold text-foreground'
                   : 'text-muted-foreground',
               )
             }
-            to='/stack'
-            viewTransition>
+            to='/stack'>
             Stack
           </NavLink>
           <NavLink
             className={({ isActive }) =>
               cn(
-                'text-sm transition-colors hover:text-foreground',
+                'text-sm hover:text-foreground',
                 isActive
                   ? 'font-semibold text-foreground'
                   : 'text-muted-foreground',
               )
             }
-            to='/about'
-            viewTransition>
+            to='/about'>
             About
           </NavLink>
         </div>
@@ -78,9 +72,7 @@ export const AppShell: React.FC = () => {
 
 export const Home: React.FC = () => {
   return (
-    <div
-      className='mx-auto max-w-2xl px-6 py-20'
-      style={{ viewTransitionName: 'page-content' }}>
+    <div className='mx-auto max-w-2xl px-6 py-20'>
       <h1 className='mb-4 text-5xl font-bold tracking-tight text-foreground'>
         Building things that feel right.
       </h1>
@@ -107,9 +99,7 @@ export const Home: React.FC = () => {
 
 export const Work: React.FC = () => {
   return (
-    <div
-      className='mx-auto max-w-2xl px-6 py-20'
-      style={{ viewTransitionName: 'page-content' }}>
+    <div className='mx-auto max-w-2xl px-6 py-20'>
       <h1 className='mb-10 text-4xl font-bold tracking-tight text-foreground'>
         Work
       </h1>
@@ -138,9 +128,7 @@ export const Work: React.FC = () => {
 
 export const Stack: React.FC = () => {
   return (
-    <div
-      className='mx-auto max-w-2xl px-6 py-20'
-      style={{ viewTransitionName: 'page-content' }}>
+    <div className='mx-auto max-w-2xl px-6 py-20'>
       <h1 className='mb-10 text-4xl font-bold tracking-tight text-foreground'>
         Stack
       </h1>
@@ -168,9 +156,7 @@ export const Stack: React.FC = () => {
 
 export const About: React.FC = () => {
   return (
-    <div
-      className='mx-auto max-w-2xl px-6 py-20'
-      style={{ viewTransitionName: 'page-content' }}>
+    <div className='mx-auto max-w-2xl px-6 py-20'>
       <h1 className='mb-8 text-4xl font-bold tracking-tight text-foreground'>
         About
       </h1>
