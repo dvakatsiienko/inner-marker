@@ -20,27 +20,6 @@
   }
 }
 
-@layer components {
-  .layout {
-    display: grid;
-    grid-template-areas:
-      "z cmk x"
-      "links cards x"
-      "sidebar-l content sidebar-r"
-      "sidebar-l content sidebar-r";
-    grid-template-rows: 46px 100px 1fr 100px;
-    grid-template-columns: 300px 1fr 300px;
-  }
-
-  .heading {
-    @apply text-2xl font-bold;
-  }
-
-  .subheading {
-    @apply text-lg font-semibold;
-  }
-}
-
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);

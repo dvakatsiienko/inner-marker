@@ -1,5 +1,5 @@
 /* Core */
-import { NavLink, Outlet } from 'react-router';
+import { Link, NavLink, Outlet } from 'react-router';
 
 import { cn } from '@/helpers/cn';
 
@@ -7,9 +7,11 @@ export const AppShell: React.FC = () => {
   return (
     <div className='flex min-h-screen flex-col'>
       <nav className='flex items-center justify-between border-b px-6 py-4'>
-        <span className='font-mono text-sm font-semibold tracking-tight text-foreground'>
+        <Link
+          className='cursor-pointer font-mono text-sm font-semibold tracking-tight text-foreground hover:no-underline'
+          to='/'>
           inner-marker
-        </span>
+        </Link>
         <div className='flex gap-6'>
           <NavLink
             className={({ isActive }) =>
