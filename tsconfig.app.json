@@ -2,7 +2,6 @@
   "compilerOptions": {
     "allowImportingTsExtensions": true,
 
-    "baseUrl": ".",
     "isolatedModules": true,
     "jsx": "react-jsx",
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
@@ -19,6 +18,7 @@
     "paths": {
       "@/*": ["./src/*"]
     },
+    "rootDir": "./src",
     "skipLibCheck": true,
 
     /* Linting */
