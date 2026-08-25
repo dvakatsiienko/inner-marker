@@ -25,7 +25,7 @@ export const Home = () => {
           src/pages/Lab.tsx
         </code>{' '}
         — it renders at{' '}
-        <Link className='text-primary underline underline-offset-4' to='/lab'>
+        <Link className='underline' to='/lab'>
           /lab
         </Link>{' '}
         and is meant to be overwritten.
