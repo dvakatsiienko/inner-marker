@@ -1,22 +1,24 @@
+/* Core */
 import { StrictMode } from 'react';
 import { RouterProvider, createBrowserRouter } from 'react-router';
 import { createRoot } from 'react-dom/client';
+
+/* Components */
+import { App } from './App';
+import { Home } from './pages/Home';
+import { Lab } from './pages/Lab';
+
+/* Instruments */
 import '@fontsource-variable/inter';
 import './theme/tailwind.css';
-
-import { About, AppShell, Home, Stack, Work } from './App';
-import { Testing } from './Testing';
 
 const router = createBrowserRouter([
   {
     children: [
       { element: <Home />, index: true },
-      { element: <Work />, path: 'work' },
-      { element: <Stack />, path: 'stack' },
-      { element: <About />, path: 'about' },
-      { element: <Testing />, path: 'test' },
+      { element: <Lab />, path: 'lab' },
     ],
-    element: <AppShell />,
+    element: <App />,
     path: '/',
   },
 ]);

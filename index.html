@@ -4,10 +4,19 @@
     <meta charset="UTF-8" />
     <link href="/vite.svg" rel="icon" type="image/svg+xml" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Inner Marker</title>
+    <title>inner-marker</title>
+    <script>
+      const storedTheme = localStorage.getItem('theme');
+      const prefersDark = matchMedia('(prefers-color-scheme: dark)').matches;
+
+      document.documentElement.classList.toggle(
+        'dark',
+        storedTheme ? storedTheme === 'dark' : prefersDark,
+      );
+    </script>
   </head>
   <body>
     <div id="root"></div>
-    <script src="/src/main.tsx" type="module" ></script>
+    <script src="/src/main.tsx" type="module"></script>
   </body>
 </html>

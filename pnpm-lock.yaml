@@ -72,9 +72,6 @@ importers:
       vite:
         specifier: 8.2.2
         version: 8.2.2(@types/node@26.2.0)(jiti@2.7.0)(sass-embedded@1.89.1)
-      waait:
-        specifier: 1.0.5
-        version: 1.0.5
 
 packages:
 
@@ -1566,9 +1563,6 @@ packages:
       yaml:
         optional: true
 
-  waait@1.0.5:
-    resolution: {integrity: sha512-wp+unA4CpqxvBUKHHv8D86fK4jWByHAWyhEXXVHfVUZfK+16ylpj7hjQ58Z8j9ntu8XNukRQT8Fi5qbyJ8rkyw==}
-
   which-boxed-primitive@1.1.1:
     resolution: {integrity: sha512-TbX3mj8n0odCBFVlY8AxkqcHASw3L60jIuF8jFP78az3C2YhmGvqbHBpAjTRH2/xqYunrJ9g1jSyjCjpoWzIAA==}
     engines: {node: '>= 0.4'}
@@ -2968,8 +2962,6 @@ snapshots:
       fsevents: 2.3.3
       jiti: 2.7.0
       sass-embedded: 1.89.1
-
-  waait@1.0.5: {}
 
   which-boxed-primitive@1.1.1:
     dependencies:
