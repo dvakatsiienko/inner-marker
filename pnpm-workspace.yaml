@@ -1,6 +1,9 @@
 packages:
   - '.'
 
+allowBuilds:
+  lefthook: true
+
 onlyBuiltDependencies:
   - '@swc/core'
   - '@tailwindcss/oxide'
