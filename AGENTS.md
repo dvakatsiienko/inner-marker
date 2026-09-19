@@ -1,4 +1,4 @@
-# CLAUDE.md — inner-marker
+# AGENTS.md — inner-marker
 
 a personal vite playground — a starter shell kept deliberately bare, so an
 experiment can be dropped in and thrown away. no product, no backend, no users.
